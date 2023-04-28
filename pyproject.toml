@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "telegram-ai-bot"
+version = "0.1.0"
+description = ""
+authors = ["Leandro Ardissone <lardissone@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+asyncio = "^3.4.3"
+openai = "^0.27.4"
+aiogram = "^2.25.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

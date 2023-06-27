@@ -21,7 +21,7 @@ async def send_welcome(message: types.Message):
     """
     await message.reply("ZzzzZzZZZzz....")
 
-@dp.message_handler(IsAllowedUser(), content_types=types.ContentType.VOICE)
+@dp.message_handler(IsAllowedUser(), content_types=[types.ContentType.VOICE, types.ContentType.AUDIO])
 async def transcribe(message: types.Message):
     new_msg = await message.answer("One moment, processing audio...")
 
@@ -29,7 +29,11 @@ async def transcribe(message: types.Message):
     base_file_name = str(uuid4())
     file_name = "./tmp/" + base_file_name + ".oga"
     converted_file_name = "./tmp/" + base_file_name + ".mp3"
-    await message.voice.download(destination_file=file_name)
+
+    if message.content_type == types.ContentType.VOICE:
+        await message.voice.download(destination_file=file_name)
+    else:
+        await message.audio.download(destination_file=file_name)
 
     subprocess.run(['ffmpeg', '-y', '-i', file_name, converted_file_name])
     if os.path.isfile(file_name):
